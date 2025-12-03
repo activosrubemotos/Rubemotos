@@ -14,8 +14,8 @@
 
     .container {
       display: flex;
-      align-items: flex-start;   /* alinea arriba */
-      justify-content: center;
+      align-items: flex-start;   /* pegado arriba */
+      justify-content: center;   /* centrado horizontalmente */
       height: 100vh;
       width: 100vw;
       margin: 0;
@@ -23,15 +23,19 @@
     }
 
     .gif-wrap {
-      width: 100%;
-      height: auto;              /* altura flexible */
-      max-height: 100vh;         /* no excede pantalla */
+      max-width: 1200px;         /* límite máximo en pantallas grandes */
+      width: 100%;               /* ocupa todo el ancho disponible hasta el límite */
+      height: auto;
+      display: flex;
+      justify-content: center;   /* centra el GIF dentro del wrap */
+      align-items: flex-start;
       overflow: hidden;
     }
 
     .gif-wrap img {
-      width: 100%;
-      height: auto;              /* mantiene proporción */
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;       /* asegura que se vea completo */
       display: block;
     }
   </style>
@@ -52,17 +56,17 @@
     const gif = document.getElementById('gif');
     const body = document.body;
 
-    // Paso 1: después del inicio, mostrar el segundo GIF y cambiar fondo
+    // Paso 1: después del inicio, mostrar el segundo GIF y aplicar degradado
     setTimeout(() => {
       gif.src = "intermedio03.gif";
       gif.alt = "Animación intermedia";
-      body.style.backgroundColor = "#e2bd9e"; // cambia fondo
+      body.style.background = "linear-gradient(to bottom, #862828 0%, #862828 50%, #e2bd9e 75%, #e2bd9e 100%)";
 
-      // Paso 2: después del segundo GIF, mostrar el último y mantener fondo
+      // Paso 2: después del segundo GIF, mostrar el último y mantener degradado
       setTimeout(() => {
         gif.src = "rubemotos-final.gif";
         gif.alt = "Animación cierre";
-        body.style.backgroundColor = "#e2bd9e"; // mantiene fondo
+        body.style.background = "linear-gradient(to bottom, #862828 0%, #862828 50%, #e2bd9e 75%, #e2bd9e 100%)";
       }, duracionIntermedio);
 
     }, duracionInicio);
