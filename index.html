@@ -8,7 +8,7 @@
     html, body {
       height: 100%;
       margin: 0;
-      background: #e2bd9e;
+      background: #862828; /* color inicial */
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -27,7 +27,6 @@
       height: auto;              /* altura flexible */
       max-height: 100vh;         /* no excede pantalla */
       overflow: hidden;
-      background: #862828;
     }
 
     .gif-wrap img {
@@ -47,24 +46,26 @@
 
   <script>
     // Duración aproximada de cada GIF en milisegundos
-    const duracionInicio = 8000; // duración del rubemotos-inicio.gif
-    const duracionFinal  = 3039; // duración del rubemotos-final.gif
+    const duracionInicio = 8000; // duración del inicio03.gif
+    const duracionIntermedio = 3039; // duración del intermedio03.gif
 
     const gif = document.getElementById('gif');
+    const body = document.body;
 
-    // Paso 1: después del inicio, mostrar el segundo GIF
+    // Paso 1: después del inicio, mostrar el segundo GIF y cambiar fondo
     setTimeout(() => {
       gif.src = "intermedio03.gif";
-      gif.alt = "Animación rubeya";
+      gif.alt = "Animación intermedia";
+      body.style.backgroundColor = "#e2bd9e"; // cambia fondo
 
-      // Paso 2: después del segundo GIF, mostrar el último
+      // Paso 2: después del segundo GIF, mostrar el último y mantener fondo
       setTimeout(() => {
         gif.src = "rubemotos-final.gif";
         gif.alt = "Animación cierre";
-      }, duracionFinal);
+        body.style.backgroundColor = "#e2bd9e"; // mantiene fondo
+      }, duracionIntermedio);
 
     }, duracionInicio);
   </script>
 </body>
 </html>
-
