@@ -41,25 +41,29 @@
   <main class="container">
     <div class="gif-wrap">
       <!-- Comienza mostrando el GIF de inicio -->
-      <img id="gif" src="rubemotos-inicio.gif" alt="Animación inicio" loading="lazy" decoding="async">
+      <img id="gif" src="inicio03.gif" alt="Animación inicio" loading="lazy" decoding="async">
     </div>
   </main>
 
   <script>
-    // Duración aproximada del GIF de inicio en milisegundos
-    const duracionInicio = 9100; // ajusta según la duración real de ini.gif
+    // Duración aproximada de cada GIF en milisegundos
+    const duracionInicio = 8000; // duración del rubemotos-inicio.gif
+    const duracionFinal  = 3039; // duración del rubemotos-final.gif
 
+    const gif = document.getElementById('gif');
+
+    // Paso 1: después del inicio, mostrar el segundo GIF
     setTimeout(() => {
-      const gif = document.getElementById('gif');
-      gif.src = "rubemotos-final.gif"; // cambia al GIF principal
+      gif.src = "intermedio03.gif";
       gif.alt = "Animación rubeya";
+
+      // Paso 2: después del segundo GIF, mostrar el último
+      setTimeout(() => {
+        gif.src = "rubemotos-final.gif";
+        gif.alt = "Animación cierre";
+      }, duracionFinal);
+
     }, duracionInicio);
   </script>
 </body>
 </html>
-
-
-
-
-
-
