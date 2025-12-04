@@ -29,6 +29,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      position: relative; /* permite superponer imágenes */
     }
 
     .gif-wrap img {
@@ -36,7 +37,10 @@
       max-height: 100%;
       object-fit: contain;
       display: block;
-      opacity: 1;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
       transition: opacity 0.6s ease; /* transición suave */
     }
   </style>
@@ -45,7 +49,7 @@
   <main class="container">
     <div class="gif-wrap" id="gifWrap">
       <!-- GIF inicial -->
-      <img id="gifActual" src="inicio03.gif" alt="Animación inicio" loading="lazy" decoding="async">
+      <img id="gifActual" src="inicio03.gif" alt="Animación inicio" loading="lazy" decoding="async" style="opacity:1;">
     </div>
   </main>
 
@@ -65,12 +69,22 @@
       nuevoGif.decoding = "async";
       nuevoGif.style.opacity = "0"; // empieza invisible
 
-      // Reemplaza directamente el nodo
-      gifWrap.replaceChild(nuevoGif, actual);
+      // Esperar a que el nuevo GIF esté cargado
+      nuevoGif.addEventListener("load", () => {
+        gifWrap.appendChild(nuevoGif);
 
-      // Forzar reflujo y luego mostrar con fade-in
-      requestAnimationFrame(() => {
-        nuevoGif.style.opacity = "1";
+        // Forzar reflujo y luego mostrar con fade-in
+        requestAnimationFrame(() => {
+          nuevoGif.style.opacity = "1";
+          actual.style.opacity = "0"; // fade-out del anterior
+        });
+
+        // Eliminar el viejo después de la transición
+        setTimeout(() => {
+          if (gifWrap.contains(actual)) {
+            gifWrap.removeChild(actual);
+          }
+        }, 600); // coincide con la duración del fade
       });
 
       return nuevoGif;
