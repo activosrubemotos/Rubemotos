@@ -29,7 +29,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      position: relative; /* permite superponer imágenes */
+      position: relative;
     }
 
     .gif-wrap img {
@@ -41,7 +41,7 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      transition: opacity 0.6s ease; /* transición suave */
+      transition: opacity 0.6s ease;
     }
   </style>
 </head>
@@ -49,7 +49,7 @@
   <main class="container">
     <div class="gif-wrap" id="gifWrap">
       <!-- GIF inicial -->
-      <img id="gifActual" src="inicio03.gif" alt="Animación inicio" loading="lazy" decoding="async" style="opacity:1;">
+      <img id="gifActual" src="inicio03.gif" alt="Animación inicio" style="opacity:1;">
     </div>
   </main>
 
@@ -61,30 +61,26 @@
     const body = document.body;
 
     // Función para reemplazar un GIF por otro con transición
-    function reemplazarGif(actual, nuevoSrc, nuevoAlt) {
+    function reemplazarGif(actual, nuevoSrc, nuevoAlt, nuevoId) {
       const nuevoGif = document.createElement("img");
       nuevoGif.src = nuevoSrc;
       nuevoGif.alt = nuevoAlt;
-      nuevoGif.loading = "lazy";
-      nuevoGif.decoding = "async";
-      nuevoGif.style.opacity = "0"; // empieza invisible
+      nuevoGif.id = nuevoId; // asignar id para poder referenciarlo después
+      nuevoGif.style.opacity = "0";
 
-      // Esperar a que el nuevo GIF esté cargado
       nuevoGif.addEventListener("load", () => {
         gifWrap.appendChild(nuevoGif);
 
-        // Forzar reflujo y luego mostrar con fade-in
         requestAnimationFrame(() => {
           nuevoGif.style.opacity = "1";
-          actual.style.opacity = "0"; // fade-out del anterior
+          actual.style.opacity = "0";
         });
 
-        // Eliminar el viejo después de la transición
         setTimeout(() => {
           if (gifWrap.contains(actual)) {
             gifWrap.removeChild(actual);
           }
-        }, 600); // coincide con la duración del fade
+        }, 600);
       });
 
       return nuevoGif;
@@ -93,17 +89,10 @@
     // Paso 1: después del inicio, reemplazar por el intermedio
     setTimeout(() => {
       const gifInicio = document.getElementById('gifActual');
-      const intermedioGif = reemplazarGif(gifInicio, "intermedio03.gif", "Animación intermedia");
+      const intermedioGif = reemplazarGif(gifInicio, "intermedio03.gif", "Animación intermedia", "gifIntermedio");
 
       body.style.background = "linear-gradient(to bottom, #862828 0%, #862828 50%, #e2bd9e 75%, #e2bd9e 100%)";
 
       // Paso 2: después del intermedio, reemplazar por el final
       setTimeout(() => {
-        reemplazarGif(intermedioGif, "rubemotos-final.gif", "Animación cierre");
-        body.style.background = "linear-gradient(to bottom, #862828 0%, #862828 50%, #e2bd9e 75%, #e2bd9e 100%)";
-      }, duracionIntermedio);
-
-    }, duracionInicio);
-  </script>
-</body>
-</html>
+        const gifIntermedio = document.getElementById('gifIntermedio
